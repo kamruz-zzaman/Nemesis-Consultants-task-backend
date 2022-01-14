@@ -31,10 +31,22 @@ router.post('/', async (req, res) => {
         res.status(500).send({ message: "Internal Server Error" });
     }
 });
+
+
 router.get('/', (req, res) => {
     moon.find({}, function (error, data) {
         res.send(data)
     })
 });
+
+router.delete('/:id', (req, res) => {
+    const id = req.params.id;
+    moon.findOneAndDelete({ _id: id }, function (err) {
+        if (err) res.status(500).send({ message: "Internal Server Error" });
+        res.status(201).send({ message: "UserDetails Delet successfully" })
+    });
+})
+
+
 
 module.exports = router;
