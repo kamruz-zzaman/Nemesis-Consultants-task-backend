@@ -19,8 +19,18 @@ router.post('/', async (req, res) => {
     // let myData = new moon(req.body)
 
     try {
-        const user = await moon.findOne({ username: req.body.username, mobile: req.body.mobile, email: req.body.email });
+        const user = await moon.findOne({ username: req.body.username });
+        const user1 = await moon.findOne({ mobile: req.body.mobile });
+        const user2 = await moon.findOne({ email: req.body.email });
         if (user)
+            return res
+                .status(409)
+                .send({ message: "User with given email already Exist!" });
+        if (user1)
+            return res
+                .status(409)
+                .send({ message: "User with given email already Exist!" });
+        if (user2)
             return res
                 .status(409)
                 .send({ message: "User with given email already Exist!" });
